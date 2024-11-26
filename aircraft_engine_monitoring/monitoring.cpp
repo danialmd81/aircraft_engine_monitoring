@@ -17,8 +17,8 @@ monitoring::monitoring(QWidget* parent, QSerialPort* serial)
 	connect(serial, &QSerialPort::errorOccurred, this, &monitoring::serialError);
 
 	setupTables();
-	setupGauges();
 	setupLights();
+	setupGauges();
 
 	processor->moveToThread(workerThread);
 	connect(processor, &BufferProcessor::newMessage, this, &monitoring::handleNewMessage);
@@ -168,7 +168,9 @@ std::pair<Data::DataType, std::pair<QcGaugeWidget*, QcNeedleItem*>> monitoring::
 	//
 	mSpeedGauge->addArc(55);
 	mSpeedGauge->addDegrees(65)->setValueRange(type.minValue, type.maxValue);
-	mSpeedGauge->addColorBand(50);
+	QList<QPair<QColor, float>> colorList;
+	colorList << QPair<QColor, float>(Qt::green, 33.33) << QPair<QColor, float>(Qt::yellow, 66.66) << QPair<QColor, float>(Qt::red, 99.99);
+	mSpeedGauge->addColorBand(50)->setColors(colorList);
 
 	// add value range
 	mSpeedGauge->addValues(80)->setValueRange(type.minValue, type.maxValue);
