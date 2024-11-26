@@ -84,77 +84,77 @@ Data::DataType::DataType(int ID)
 	case 0x11:
 		name = "OIL_PRESSURE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x12:
 		name = "OIL_TEMPERATURE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x13:
 		name = "FUEL_FLOW_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x14:
 		name = "FUEL_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x15:
 		name = "EGT_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x16:
 		name = "TORQUE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x17:
 		name = "INDICATED_POWER_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x18:
 		name = "FRICTIONAL_POWER_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x19:
 		name = "THERMAL_EFFICIENCY_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1A:
 		name = "AIR_FUEL_RATIO_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1B:
 		name = "MOTOR_SPEED_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1C:
 		name = "OUTPUT_AIR_SPEED_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1D:
 		name = "VIBRATION_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1E:
 		name = "BODY_TEMP_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1F:
 		name = "AIR_TEMP_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	default:
 		name = "UNKNOWN";
@@ -250,77 +250,77 @@ Data::DataType::DataType(int ID, int DATA, int FACTOR)
 	case 0x11:
 		name = "OIL_PRESSURE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x12:
 		name = "OIL_TEMPERATURE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x13:
 		name = "FUEL_FLOW_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x14:
 		name = "FUEL_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x15:
 		name = "EGT_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x16:
 		name = "TORQUE_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x17:
 		name = "INDICATED_POWER_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x18:
 		name = "FRICTIONAL_POWER_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x19:
 		name = "THERMAL_EFFICIENCY_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1A:
 		name = "AIR_FUEL_RATIO_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1B:
 		name = "MOTOR_SPEED_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1C:
 		name = "OUTPUT_AIR_SPEED_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1D:
 		name = "VIBRATION_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1E:
 		name = "BODY_TEMP_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	case 0x1F:
 		name = "AIR_TEMP_SENSOR_ERROR";
 		minValue = 0;
-		maxValue = 1;
+		maxValue = 0;
 		break;
 	default:
 		name = "UNKNOWN";

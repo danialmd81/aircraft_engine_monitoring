@@ -8,23 +8,24 @@
 class Data
 {
 public:
-	struct DataType
+	struct DataType // struct to represent data type
+	//
 	{
 		int ID;
 		QString name;
 		int minValue;
 		int maxValue;
-		int value;
-		bool error;
+		float value; // value=data/factor
+		bool error; // error if value is out of range or error data is 1
 		DataType(int ID);
 		DataType(int ID, int DATA, int FACTOR);
 	};
 
 private:
-	DataType type;
-	int RESERVE;
-	int DATA;
-	int FACTOR;
+	DataType type; // data type
+	int RESERVE; // reserve
+	int DATA; // data
+	int FACTOR; // factor
 
 public:
 	Data(int ID, int Reserve, int Data, int Factor)
