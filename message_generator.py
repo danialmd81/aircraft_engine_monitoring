@@ -4,23 +4,25 @@ import time
 import random
 import ctypes
 
-
-data_definitions = {
-    "1": ("OIL PRESSURE", 0, 1000),
-    "2": ("OIL TEMPERATURE", 0, 400),
-    "3": ("FUEL FLOW", 0, 800),
-    "4": ("FUEL", 0, 800),
-    "5": ("EGT", 0, 400),
-    "6": ("TORQUE", 0, 400),
-    "7": ("INDICATED POWER", 0, 400),
-    "8": ("Frictional Power", 0, 400),
-    "9": ("Thermal efficiency", 0, 100),
+other_data_definitions = {
+    "01": ("OIL PRESSURE", 0, 1000),
+    "02": ("OIL TEMPERATURE", 0, 400),
+    "03": ("FUEL FLOW", 0, 800),
+    "04": ("FUEL", 0, 800),
+    "05": ("EGT", 0, 400),
+    "06": ("TORQUE", 0, 400),
+    "07": ("INDICATED POWER", 0, 400),
+    "08": ("Frictional Power", 0, 400),
+    "09": ("Thermal efficiency", 0, 100),
     "0A": ("Air-Fuel ratio", 0, 20),
     "0B": ("MOTOR SPEED", 0, 1000),
     "0C": ("OUTPUT AIR SPEED", 0, 1000),
     "0D": ("VIBRATION", 0, 100),
     "0E": ("BODY TEMP", 0, 400),
     "0F": ("AIR TEMP", 0, 400),
+}
+
+error_data_definitions = {
     "11": ("OIL PRESSURE SENSOR ERROR(0=OK, 1=ERROR)", 0, 1),
     "12": ("OIL TEMPERATURE SENSOR ERROR", 0, 1),
     "13": ("FUEL FLOW SENSOR ERROR", 0, 1),
@@ -55,31 +57,52 @@ def generateDATA(id_i, data, factor):
 
 
 # Configure the serial port
-ser = serial.Serial(
-    port="/home/danial/4",  # change it for to your port
-    baudrate=115200,
-    parity=serial.PARITY_ODD,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS,
-    # timeout=1,
-)
+try:
+    ser = serial.Serial(
+        port="/home/danial/4",  # change it for to your port
+        baudrate=115200,
+        parity=serial.PARITY_ODD,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS,
+        timeout=1,
+    )
+except serial.SerialException as e:
+    print(f"Error opening serial port: {e}")
+    exit(1)
 
 
 def generate_random_message():
     header = [0xA5, 0xA5, 0xA5, 0xA5]
     msg_counter = [random.randint(0, 255)]
-    # id_number = [random.randint(1, 31)]  # Random ID number between 1 and 31/
     id_number = [30]
     id_message = []
 
     for i in range(1, id_number[0] + 1):
-        id_i = random.randint(0, 255)
-        id_i = i
+        id_i = random.randint(1, 31)
         if id_i == 16:
             id_i = 31
 
-        data = random.randint(200, 600)
-        factor = random.randint(0, 1)
+        id_hex = (
+            format(id_i, "X").upper().zfill(2)
+        )  # Convert id_i to two-character hexadecimal string
+
+        if id_i <= 15:  # Other data
+            data_range = other_data_definitions[id_hex]
+            data = (
+                random.randint(data_range[1], data_range[2]) + data_range[2]
+                if random.random() < 0.1
+                else random.randint(data_range[1], data_range[2])
+            )  # 10% chance of error data
+            factor = (
+                random.randint(0, 10) if random.random() < 0.1 else 0
+            )  # generate float number for other data by 10% chance
+        else:  # Error data
+            data_range = error_data_definitions[id_hex]
+            data = 1 if random.random() < 0.1 else 0  # 10% chance of error
+            factor = (
+                random.randint(0, 10) if random.random() < 0.1 else 0
+            )  # generate float number for error data by 10% chance
+
         id_message.append(generateDATA(id_i, data, factor))
 
     # Flatten id_message list
@@ -102,11 +125,20 @@ def generate_random_message():
     return bytes.fromhex(final_message)
 
 
+def generate_garbage_data():
+    length = random.randint(10, 50)
+    return bytes([random.randint(0, 255) for _ in range(length)])
+
+
 try:
     while True:
-        message = generate_random_message()
+        if random.random() < 0.2:  # 20% chance to send garbage data
+            message = generate_garbage_data()
+            print(f"Sent garbage data: {message.hex().upper()}")
+        else:
+            message = generate_random_message()
+            print(f"Sent: {message.hex().upper()}")
         ser.write(message)
-        print(f"Sent: {message.hex().upper()}")
         # change the interval time for sending the message
         time.sleep(1)
 
