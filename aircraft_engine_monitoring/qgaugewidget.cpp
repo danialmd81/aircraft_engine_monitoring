@@ -4,6 +4,7 @@ QcGaugeWidget::QcGaugeWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	setMinimumSize(250, 250);
+	setMaximumSize(250, 250);
 }
 
 QcBackgroundItem* QcGaugeWidget::addBackground(float position)
@@ -522,7 +523,7 @@ void QcDegreesItem::draw(QPainter* painter)
 	QRectF tmpRect = adjustRect(position());
 	if (over_s)
 	{
-        for (int i = mMinValue; i <= mMaxValue; i++)
+		for (int i = mMinValue; i <= mMaxValue; i++)
 		{
 			if (fmodf(mMaxValue, i) == 0)
 			{
@@ -541,7 +542,7 @@ void QcDegreesItem::draw(QPainter* painter)
 		mStep = 10;
 	painter->setPen(mColor);
 	float r = getRadius(tmpRect);
-    for (int val = mMinValue; val <= mMaxValue - mStep; val += mStep)
+	for (int val = mMinValue; val <= mMaxValue - mStep; val += mStep)
 	{
 		if (!(fmodf(val, 10) == 0))
 		{
@@ -777,7 +778,7 @@ void QcValuesItem::draw(QPainter* painter)
 	painter->setPen(mColor);
 	if (over_s)
 	{
-        for (int i = mMinValue; i <= mMaxValue; i++)
+		for (int i = mMinValue; i <= mMaxValue; i++)
 		{
 			if (fmodf(mMaxValue, i) == 0)
 			{
