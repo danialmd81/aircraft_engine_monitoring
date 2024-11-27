@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget* parent)
 			ui->baud_rate->addItem(QString::number(i));
 	}
 	ui->baud_rate->setCurrentIndex(4);
+	connect(ui->start, &QPushButton::clicked, this, &MainWindow::onStartClicked);
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +31,7 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::on_start_clicked()
+void MainWindow::onStartClicked()
 {
 	// Configure serial port
 	QString serialPortName = ui->serialPortAddress->text();
@@ -92,6 +93,7 @@ void MainWindow::on_start_clicked()
 			if (serial->isOpen())
 			{
 				monitoring monitoringWindow(this, serial);
+				monitoringWindow.setUpdatesEnabled(true);
 				monitoringWindow.setWindowFlags(monitoringWindow.windowFlags() | Qt::WindowMinimizeButtonHint);
 				monitoringWindow.setModal(true);
 				monitoringWindow.showMaximized();

@@ -24,7 +24,7 @@ public:
 	~MainWindow();
 
 private slots:
-	void on_start_clicked();
+	void onStartClicked();
 
 private:
 	Ui::MainWindow* ui;
