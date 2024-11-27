@@ -18,11 +18,6 @@ void BufferProcessor::start()
 	}
 }
 
-void BufferProcessor::clear()
-{
-	receivedMsgCounters.clear();
-}
-
 void BufferProcessor::stop()
 {
 	processing = false;
@@ -82,7 +77,8 @@ void BufferProcessor::processBuffer()
 							if (receivedMsgCounters.size() == 256)
 							{
 								emit newMessage(msg);
-								emit msgCounterFull();
+								qDebug() << "Message counter full";
+								receivedMsgCounters.clear();
 							}
 							else
 								emit newMessage(msg);
@@ -100,6 +96,8 @@ void BufferProcessor::processBuffer()
 					messageBuffer.clear();
 					headerDetected = false;
 				}
+				// for the case when the message has fake header
+				messageBuffer.remove(0, 2);
 			}
 		}
 	}

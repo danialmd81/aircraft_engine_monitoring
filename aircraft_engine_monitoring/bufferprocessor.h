@@ -12,12 +12,10 @@ class BufferProcessor : public QObject
 public:
 	explicit BufferProcessor(QByteArray* buffer, QObject* parent = nullptr);
 	void start();
-	void clear();
 	void stop();
 
 signals:
 	void newMessage(const message& msg);
-	void msgCounterFull();
 
 private:
 	QByteArray* buffer;
