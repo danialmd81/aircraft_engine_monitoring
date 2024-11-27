@@ -139,11 +139,9 @@ try:
             message = generate_random_message()
             print(f"Sent: {message.hex().upper()}")
         ser.write(message)
-        # change the interval time for sending the message
-        time.sleep(0.02)
+        # Sleep for a random time between 0.02 and 2 seconds
+        time.sleep(random.uniform(0.02, 0.08))
 
 except KeyboardInterrupt:
-    print("\nStopped by user")
-
-finally:
     ser.close()
+    print("\nStopped by user")
