@@ -40,7 +40,6 @@ public:
 
 	void read();
 	void handleNewMessage(const message& msg);
-	void msgCounterFull();
 
 private slots:
 	void serialError(QSerialPort::SerialPortError error);

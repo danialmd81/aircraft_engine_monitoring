@@ -24,7 +24,6 @@ monitoring::monitoring(QWidget* parent, QSerialPort* serial)
 	// Ensure the processor's start method is called when the thread starts
 	connect(workerThread, &QThread::started, processor, &BufferProcessor::start);
 	connect(processor, &BufferProcessor::newMessage, this, &monitoring::handleNewMessage);
-	connect(processor, &BufferProcessor::msgCounterFull, this, &monitoring::msgCounterFull);
 
 	workerThread->start();
 }
@@ -49,6 +48,10 @@ void monitoring::read()
 		{
 			buffer->append(data.toHex().toUpper());
 		}
+		else
+		{
+			qDebug() << "serial port is empty";
+		}
 	}
 	else
 	{
@@ -62,12 +65,6 @@ void monitoring::handleNewMessage(const message& msg)
 	updateGauges(msg);
 	updateLights(msg);
 	writeDataToExcel(msg);
-}
-
-void monitoring::msgCounterFull()
-{
-	qDebug() << "Message counter full";
-	processor->clear();
 }
 
 void monitoring::serialError(QSerialPort::SerialPortError error)
