@@ -140,10 +140,10 @@ try:
             print(f"Sent: {message.hex().upper()}")
         ser.write(message)
         # change the interval time for sending the message
-        time.sleep(1)
+        time.sleep(0.02)
 
 except KeyboardInterrupt:
-    print("Stopped by user")
+    print("\nStopped by user")
 
 finally:
     ser.close()
