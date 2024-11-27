@@ -4,6 +4,7 @@
 #include "bufferprocessor.h"
 #include "circulargauge.h"
 #include "message.h"
+//
 #include <QDebug>
 #include <QDialog>
 #include <QDir>

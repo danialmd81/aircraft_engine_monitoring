@@ -21,11 +21,10 @@ monitoring::monitoring(QWidget* parent, QSerialPort* serial)
 	setupGauges();
 
 	processor->moveToThread(workerThread);
-	connect(processor, &BufferProcessor::newMessage, this, &monitoring::handleNewMessage);
-	connect(processor, &BufferProcessor::msgCounterFull, this, &monitoring::msgCounterFull);
-
 	// Ensure the processor's start method is called when the thread starts
 	connect(workerThread, &QThread::started, processor, &BufferProcessor::start);
+	connect(processor, &BufferProcessor::newMessage, this, &monitoring::handleNewMessage);
+	connect(processor, &BufferProcessor::msgCounterFull, this, &monitoring::msgCounterFull);
 
 	workerThread->start();
 }
@@ -153,42 +152,65 @@ std::pair<Data::DataType, std::pair<QcGaugeWidget*, QcNeedleItem*>> monitoring::
 {
 	QcGaugeWidget* mSpeedGauge;
 	QcNeedleItem* mSpeedNeedle;
+
+	// Create a new gauge widget
 	mSpeedGauge = new QcGaugeWidget;
+
+	// Add background layers to the gauge
 	mSpeedGauge->addBackground(99);
-	// this will add side color to gauge
+
+	// Add side color to the gauge
 	QcBackgroundItem* bkg1 = mSpeedGauge->addBackground(92);
 	bkg1->clearrColors();
 	bkg1->addColor(0.1, Qt::black);
 	bkg1->addColor(1.0, Qt::white);
+
+	// Add another background layer with different colors
 	QcBackgroundItem* bkg2 = mSpeedGauge->addBackground(88);
 	bkg2->clearrColors();
-	// this two line below will set background color of gauge
 	bkg2->addColor(0.1, Qt::gray);
 	bkg2->addColor(1.0, Qt::darkGray);
-	//
+
+	// Add an arc to the gauge
 	mSpeedGauge->addArc(55);
+
+	// Add degree markings to the gauge and set the value range
 	mSpeedGauge->addDegrees(65)->setValueRange(type.minValue, type.maxValue);
+
+	// Define color bands for the gauge
 	QList<QPair<QColor, float>> colorList;
 	colorList << QPair<QColor, float>(Qt::green, 33.33) << QPair<QColor, float>(Qt::yellow, 66.66) << QPair<QColor, float>(Qt::red, 99.99);
 	mSpeedGauge->addColorBand(50)->setColors(colorList);
 
-	// add value range
+	// Add value markings to the gauge and set the value range
 	mSpeedGauge->addValues(80)->setValueRange(type.minValue, type.maxValue);
-	// set gauge title
+
+	// Set the gauge title
 	mSpeedGauge->addLabel(70)->setText(type.name);
+
+	// Add a label to display the current value
 	QcLabelItem* lab = mSpeedGauge->addLabel(40);
 	lab->setText("0");
+
+	// Add a needle to the gauge
 	mSpeedNeedle = mSpeedGauge->addNeedle(60);
-	// add lable
+
+	// Link the needle to the label
 	mSpeedNeedle->setLabel(lab);
-	// set needle color
+
+	// Set the needle color
 	mSpeedNeedle->setColor(Qt::black);
-	// add range for your gauge => it should be just like the gauge range
+
+	// Set the needle value range to match the gauge range
 	mSpeedNeedle->setValueRange(type.minValue, type.maxValue);
+
+	// Add a final background layer
 	mSpeedGauge->addBackground(7);
-	// add some shadow like glass
+
+	// Add a glass effect to the gauge
 	mSpeedGauge->addGlass(88);
-	//
+
+	// Return the gauge and needle along with the data type
 	return std::make_pair(type, std::make_pair(mSpeedGauge, mSpeedNeedle));
 }
 
