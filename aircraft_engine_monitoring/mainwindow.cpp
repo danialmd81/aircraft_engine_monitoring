@@ -101,12 +101,14 @@ void MainWindow::onStartClicked()
 			}
 			else
 			{
-				qDebug() << "Failed to open serial port." << serial->errorString();
+				QString errorStr = "Failed to open serial port:" + serial->errorString();
+				QMessageBox::critical(this, "Error", errorStr);
 			}
 		}
 		else
 		{
-			qDebug() << serial->errorString();
+			QString errorStr = "Failed to open serial port:" + serial->errorString();
+			QMessageBox::critical(this, "Error", errorStr);
 		}
 	}
 }
