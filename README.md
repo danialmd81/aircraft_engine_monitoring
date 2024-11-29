@@ -44,6 +44,14 @@ This project is designed for monitoring aircraft engines. The core implementatio
       wget https://github.com/danialmd81/aircraft_engine_monitoring/releases/download/v1.0.0/aircraft_engine_monitoring_x64bit.run
       ```
 
+    - Install dependencies:
+
+      ```bash
+      sudo apt-get update
+      sudo apt-get install libgl1-mesa-dev
+      sudo apt-get install libxkbcommon-dev 
+      ```
+
 2. Make the installer executable and run:
 
     ```bash
