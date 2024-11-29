@@ -50,16 +50,34 @@ def calculate_checksum(data):
 
 def generateDATA(id_i, data, factor):
     reserve = [0x00]
-    data_bytes = list(struct.pack(">I", data))
-    factor_bytes = list(struct.pack(">I", factor))
+    data_bytes = list(struct.pack("<I", data))
+    factor_bytes = list(struct.pack("<I", factor))
+    print(f"Data: {data}, 0xData : {''.join(format(x, '02X') for x in data_bytes)}")
+
+    print(
+        f"Factor: {factor}, 0xFactor : {''.join(format(x, '02X') for x in factor_bytes)}"
+    )
     message = [id_i] + reserve + data_bytes + factor_bytes
     return message
 
 
+# # Configure the serial port
+# try:
+#     ser = serial.Serial(
+#         port="/home/danial/4",  # change it for to your port
+#         baudrate=115200,
+#         parity=serial.PARITY_ODD,
+#         stopbits=serial.STOPBITS_ONE,
+#         bytesize=serial.EIGHTBITS,
+#         timeout=1,
+#     )
+# except serial.SerialException as e:
+#     print(f"Error opening serial port: {e}")
+#     exit(1)
 # Configure the serial port
 try:
     ser = serial.Serial(
-        port="/home/danial/4",  # change it for to your port
+        port="COM2",  # change it for to your port
         baudrate=115200,
         parity=serial.PARITY_ODD,
         stopbits=serial.STOPBITS_ONE,
@@ -75,8 +93,8 @@ def generate_random_message():
     header = [0xA5, 0xA5, 0xA5, 0xA5]
     msg_counter = [random.randint(0, 255)]
     id_number = [30]
+    # id_number = [2]
     id_message = []
-
     for i in range(1, id_number[0] + 1):
         id_i = random.randint(1, 31)
         if id_i == 16:
@@ -94,13 +112,13 @@ def generate_random_message():
                 else random.randint(data_range[1], data_range[2])
             )  # 10% chance of error data
             factor = (
-                random.randint(0, 10) if random.random() < 0.1 else 0
-            )  # generate float number for other data by 10% chance
+                random.randint(0, 1000) if random.random() < 0.4 else 0
+            )  # generate float number for other data by 40% chance
         else:  # Error data
             data_range = error_data_definitions[id_hex]
             data = 1 if random.random() < 0.1 else 0  # 10% chance of error
             factor = (
-                random.randint(0, 10) if random.random() < 0.1 else 0
+                random.randint(0, 1000) if random.random() < 0.1 else 0
             )  # generate float number for error data by 10% chance
 
         id_message.append(generateDATA(id_i, data, factor))
@@ -111,6 +129,7 @@ def generate_random_message():
     )
     # Calculate checksum for the flattened id_message
     checksum = list(calculate_checksum(flattened_id_message))
+    checksum = checksum[::-1]  # Reverse the checksum bytes for little endian order
     footer = [0x55]
 
     # Convert header, msg_counter, id_number, and checksum to hex strings
@@ -139,9 +158,11 @@ try:
             message = generate_random_message()
             print(f"Sent: {message.hex().upper()}")
         ser.write(message)
-        # Sleep for a random time between 0.02 and 2 seconds
-        time.sleep(random.uniform(0.02, 0.08))
+        # Sleep for a random time between 0.02 and 1 seconds
+        time.sleep(random.uniform(0.02, 1.0))
+        # time.sleep(random.uniform(0.1, 1.0))
+        # time.sleep(2)
 
 except KeyboardInterrupt:
     ser.close()
-    print("\nStopped by user")
+    print("Stopped by user")
