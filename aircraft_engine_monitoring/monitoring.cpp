@@ -61,6 +61,7 @@ void monitoring::read()
 
 void monitoring::handleNewMessage(const message& msg)
 {
+	qDebug() << "new message";
 	updateTables(msg);
 	updateGauges(msg);
 	updateLights(msg);
