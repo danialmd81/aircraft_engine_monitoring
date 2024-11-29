@@ -166,7 +166,7 @@ Data::DataType::DataType(int ID)
 	error = false;
 }
 
-Data::DataType::DataType(int ID, int DATA, int FACTOR)
+Data::DataType::DataType(int ID, unsigned int DATA, unsigned int FACTOR)
 	: ID(ID)
 {
 
@@ -335,7 +335,7 @@ Data::DataType::DataType(int ID, int DATA, int FACTOR)
 		value = DATA;
 	}
 	else
-		value = DATA / FACTOR;
+		value = float(DATA) / FACTOR;
 
 	if (value < minValue || value > maxValue)
 		error = true;
@@ -349,14 +349,28 @@ void message::parseHexMessage(const QByteArray& hexMessage)
 	msgCounter = hexMessage.mid(8, 2).toInt(nullptr, 16); // 1 byte for message counter 1*2=2
 	idNumber = hexMessage.mid(10, 2).toInt(nullptr, 16); // 1 byte for ID number 1*2=2
 
+	auto littleEndian = [](QByteArray message) -> QByteArray
+	{
+		char byte1[2] = { message[0], message[1] };
+		char byte2[2] = { message[2], message[3] };
+		message[0] = message[6];
+		message[1] = message[7];
+		message[2] = message[4];
+		message[3] = message[5];
+		message[4] = byte2[0];
+		message[5] = byte2[1];
+		message[6] = byte1[0];
+		message[7] = byte1[1];
+		return message;
+	};
+
 	for (int i = 0; i < idNumber; i++)
 	{
 		int idIndex = 12 + (i * 20); // 10 bytes for each data 10*2=20
 		int id = hexMessage.mid(idIndex, 2).toInt(nullptr, 16); // 1 byte for ID 1*2=2
 		int reserve = hexMessage.mid(idIndex + 2, 2).toInt(nullptr, 16); // 1 byte for reserve 1*2=2
-		int dataValue = hexMessage.mid(idIndex + 4, 8).toInt(nullptr, 16); // 4 bytes for data 4*2=8
-		int factorValue = hexMessage.mid(idIndex + 12, 8).toInt(nullptr, 16); // 4 bytes for factor 4*2=8
-
+		unsigned int dataValue = littleEndian(hexMessage.mid(idIndex + 4, 8)).toUInt(nullptr, 16); // 4 bytes for data 4*2=8
+		unsigned int factorValue = littleEndian(hexMessage.mid(idIndex + 12, 8)).toUInt(nullptr, 16); // 4 bytes for factor 4*2=8
 		dataList.push_back(Data(id, reserve, dataValue, factorValue));
 	}
 
@@ -385,7 +399,11 @@ QString message::checksum(const QByteArray& hexMessage)
 	{
 		check.prepend('0');
 	}
-
+	QChar byte[2] = { check[0], check[1] };
+	check[0] = check[2];
+	check[1] = check[3];
+	check[2] = byte[0];
+	check[3] = byte[1];
 	// qDebug() << check;
 	return check;
 }

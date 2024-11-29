@@ -18,17 +18,17 @@ public:
 		float value; // value=data/factor
 		bool error; // error if value is out of range or error data is 1
 		DataType(int ID);
-		DataType(int ID, int DATA, int FACTOR);
+		DataType(int ID, unsigned int DATA, unsigned int FACTOR);
 	};
 
 private:
 	DataType type; // data type
 	int RESERVE; // reserve
-	int DATA; // data
-	int FACTOR; // factor
+	unsigned int DATA; // data
+	unsigned int FACTOR; // factor
 
 public:
-	Data(int ID, int Reserve, int Data, int Factor)
+	Data(int ID, int Reserve, unsigned int Data, unsigned int Factor)
 		: type(ID, Data, Factor)
 		, RESERVE(Reserve)
 		, DATA(Data)
