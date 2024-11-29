@@ -21,11 +21,11 @@ This project is designed for monitoring aircraft engines. The core implementatio
 
 1. Download the Windows executable:
     - Visit the [releases page](https://github.com/danialmd81/aircraft_engine_monitoring/releases)
-    - Download `aircraft_engine_monitoring_x64bit.exe`
+    - Download `aircraft_engine_monitoring_setup.exe`
     - Or use PowerShell:
 
       ```powershell
-      Invoke-WebRequest -Uri "https://github.com/danialmd81/aircraft_engine_monitoring/releases/latest/download/aircraft_engine_monitoring_x64bit.exe" -OutFile "aircraft_engine_monitoring_x64bit.exe"
+      Invoke-WebRequest -Uri "https://github.com/danialmd81/aircraft_engine_monitoring/releases/latest/download/aircraft_engine_monitoring_setup.exe" -OutFile "aircraft_engine_monitoring_setup.exe"
       ```
 
 2. Run the installer:
@@ -37,11 +37,13 @@ This project is designed for monitoring aircraft engines. The core implementatio
 
 1. Download the Linux installer:
     - Visit the [releases page](https://github.com/danialmd81/aircraft_engine_monitoring/releases)
-    - Download `aircraft_engine_monitoring_x64bit.run`
+    - Download `aircraft_engine_monitoring_setup.run`
+`
     - Or use wget:
 
       ```bash
-      wget https://github.com/danialmd81/aircraft_engine_monitoring/releases/download/v1.0.0/aircraft_engine_monitoring_x64bit.run
+      wget https://github.com/danialmd81/aircraft_engine_monitoring/releases/latest/download/aircraft_engine_monitoring_setup.run
+
       ```
 
     - Install dependencies:
@@ -52,14 +54,14 @@ This project is designed for monitoring aircraft engines. The core implementatio
       sudo apt-get install libxkbcommon-dev 
       ```
 
-2. Make the installer executable and run:
+1. Make the installer executable and run:
 
     ```bash
     chmod +x aircraft_engine_monitoring_x64bit.run
     ./aircraft_engine_monitoring_x64bit.run
     ```
 
-3. Follow the installation wizard prompts.
+2. Follow the installation wizard prompts.
 
 ## Notes
 
