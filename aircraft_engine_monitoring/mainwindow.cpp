@@ -9,15 +9,23 @@ MainWindow::MainWindow(QWidget* parent)
 {
 	ui->setupUi(this);
 
-	ui->serialPortAddress->setText("/home/danial/5");
-
+	int index = 0;
 	for (const auto i : QSerialPortInfo::standardBaudRates())
 	{
 		if (i >= 9600 && i <= 1000000)
+		{
 			ui->baud_rate->addItem(QString::number(i));
+			if (i == 115200)
+			{
+				index = ui->baud_rate->count() - 1;
+			}
+		}
 	}
-	ui->baud_rate->setCurrentIndex(4);
+	ui->baud_rate->setCurrentIndex(index);
 	connect(ui->start, &QPushButton::clicked, this, &MainWindow::onStartClicked);
+
+	setWindowTitle("Aircraft Engine Monitoring");
+	setUpdatesEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -94,9 +102,9 @@ void MainWindow::onStartClicked()
 			{
 				monitoring monitoringWindow(this, serial);
 				monitoringWindow.setUpdatesEnabled(true);
-				monitoringWindow.setWindowFlags(monitoringWindow.windowFlags() | Qt::WindowMinimizeButtonHint);
+				monitoringWindow.setWindowFlags(monitoringWindow.windowFlags() | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
 				monitoringWindow.setModal(true);
-				monitoringWindow.showMaximized();
+				monitoringWindow.show();
 				monitoringWindow.exec();
 			}
 			else
