@@ -351,16 +351,19 @@ void message::parseHexMessage(const QByteArray& hexMessage)
 
 	auto littleEndian = [](QByteArray message) -> QByteArray
 	{
-		char byte1[2] = { message[0], message[1] };
-		char byte2[2] = { message[2], message[3] };
-		message[0] = message[6];
-		message[1] = message[7];
-		message[2] = message[4];
-		message[3] = message[5];
-		message[4] = byte2[0];
-		message[5] = byte2[1];
-		message[6] = byte1[0];
-		message[7] = byte1[1];
+		if (message.size() == 8)
+		{
+			char byte1[2] = { message[0], message[1] };
+			char byte2[2] = { message[2], message[3] };
+			message[0] = message[6];
+			message[1] = message[7];
+			message[2] = message[4];
+			message[3] = message[5];
+			message[4] = byte2[0];
+			message[5] = byte2[1];
+			message[6] = byte1[0];
+			message[7] = byte1[1];
+		}
 		return message;
 	};
 
