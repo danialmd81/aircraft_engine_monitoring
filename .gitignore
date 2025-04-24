@@ -120,3 +120,4 @@ JetMotor/ui/serialsettingwidget.ui
 JetMotor/ui/simulatorrulemanagerwidget.cpp
 JetMotor/ui/simulatorrulemanagerwidget.h
 JetMotor/ui/simulatorrulemanagerwidget.ui
+aircraft_engine_monitoring/build/Desktop_Qt_6_8_1-Debug/*
