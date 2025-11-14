@@ -65,10 +65,8 @@ compile_commands.json
 
 *.exe
 
-build/*
+build/
 
 venv/*
 
 release/*
-
-aircraft_engine_monitoring/build/Desktop_Qt_6_8_1-Debug/*
